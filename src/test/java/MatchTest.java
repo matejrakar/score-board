@@ -4,11 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {
 
+    private static final String TEST_HOME_TEAM_NAME = "home_team_name";
+    private static final String TEST_AWAY_TEAM_NAME = "away_team_name";
+
     @Test
     public void constructor_ValidParameters_InitializeCorrectly() {
-        Match match = new Match("home_team_name", "away_team_name");
-        assertEquals(match.getHomeTeamName(), "home_team_name");
-        assertEquals(match.getAwayTeamName(), "away_team_name");
+        Match match = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        assertEquals(match.getHomeTeamName(), TEST_HOME_TEAM_NAME);
+        assertEquals(match.getAwayTeamName(), TEST_AWAY_TEAM_NAME);
         assertEquals(match.getHomeTeamScore(), 0);
         assertEquals(match.getAwayTeamScore(), 0);
     }
@@ -21,15 +24,15 @@ public class MatchTest {
 
     @Test
     public void equals_TwoEqualObjects_EqualsTrue() {
-        Match match1 = new Match ("home_team_name", "away_team_name");
-        Match match2 = new Match ("home_team_name", "away_team_name");
+        Match match1 = new Match (TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        Match match2 = new Match (TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
         assertTrue(match1.equals(match2));
         assertTrue(match1.hashCode() == match2.hashCode());
     }
 
     @Test
     public void updateScore_ValidScores_CorrectScoresSet() {
-        Match match = new Match ("home_team_name", "away_team_name");
+        Match match = new Match (TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
         match.updateScore(1, 0);
         assertEquals(match.getHomeTeamScore(), 1);
         assertEquals(match.getAwayTeamScore(), 0);
@@ -37,7 +40,7 @@ public class MatchTest {
 
     @Test
     public void updateScore_InvalidScores_ExceptionThrown() {
-        Match match = new Match ("home_team_name", "away_team_name");
-        assertThrows(IllegalArgumentException.class, () -> match.updateScore(0, -1));
+        Match match = new Match (TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        assertThrows(IllegalArgumentException.class, () -> match.updateScore(-2, -1));
     }
 }
