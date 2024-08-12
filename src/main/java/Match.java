@@ -7,6 +7,10 @@ public class Match {
     private int awayTeamScore;
 
     public Match(String homeTeamName, String awayTeamName) {
+        if (homeTeamName == null || awayTeamName == null
+                || homeTeamName.isBlank() || awayTeamName.isBlank()) {
+            throw new IllegalArgumentException("Team names cannot be null or empty");
+        }
         this.homeTeamName = homeTeamName;
         this.awayTeamName = awayTeamName;
         this.homeTeamScore = 0;

@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {
 
@@ -12,6 +11,16 @@ public class MatchTest {
         assertEquals(match.getAwayTeamName(), "away_team_name");
         assertEquals(match.getHomeTeamScore(), 0);
         assertEquals(match.getAwayTeamScore(), 0);
+    }
+
+    @Test
+    public void constructor_InvalidParameters_InitializationFail() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Match("", null);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Match(null, " ");
+        });
     }
 
     @Test
