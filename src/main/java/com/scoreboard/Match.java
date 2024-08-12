@@ -1,3 +1,5 @@
+package com.scoreboard;
+
 import java.util.Objects;
 
 public class Match {

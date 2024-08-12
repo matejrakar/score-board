@@ -1,11 +1,12 @@
+package com.scoreboard;
+
 import org.junit.jupiter.api.Test;
+import static com.scoreboard.TestConstants.TEST_AWAY_TEAM_NAME;
+import static com.scoreboard.TestConstants.TEST_HOME_TEAM_NAME;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchTest {
-
-    private static final String TEST_HOME_TEAM_NAME = "home_team_name";
-    private static final String TEST_AWAY_TEAM_NAME = "away_team_name";
 
     @Test
     public void constructor_ValidParameters_InitializeCorrectly() {
