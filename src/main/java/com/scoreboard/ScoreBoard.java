@@ -18,6 +18,10 @@ public class ScoreBoard {
         }
     }
 
+    public Match getMatch(int key) {
+        return this.scoreBoard.get(key);
+    }
+
     public ConcurrentHashMap<Integer, Match> getScoreBoard() {
         return scoreBoard;
     }

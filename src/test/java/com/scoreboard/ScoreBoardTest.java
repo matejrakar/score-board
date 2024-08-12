@@ -23,4 +23,20 @@ public class ScoreBoardTest {
         assertThrows(IllegalArgumentException.class, () -> scoreBoard.addMatch(null));
     }
 
+    @Test
+    public void getMatch_MatchExists_ReturnsMatch() {
+        ScoreBoard scoreBoard = new ScoreBoard();
+        Match match = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        scoreBoard.addMatch(match);
+        Match matchFromScoreBoard = scoreBoard.getMatch(match.hashCode());
+        assertEquals(matchFromScoreBoard, match);
+    }
+
+    @Test
+    public void getMatch_MatchDoesNotExist_ReturnsNull() {
+        ScoreBoard scoreBoard = new ScoreBoard();
+        Match matchFromScoreBoard = scoreBoard.getMatch(123);
+        assertNull(matchFromScoreBoard);
+    }
+
 }
