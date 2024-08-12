@@ -18,6 +18,9 @@ public class Match {
     }
 
     public void updateScore (int homeTeamScore, int awayTeamScore) {
+        if (homeTeamScore < 0 || awayTeamScore < 0) {
+            throw new IllegalArgumentException("Scores must be non-negative integers");
+        }
         this.setHomeTeamScore(homeTeamScore);
         this.setAwayTeamScore(awayTeamScore);
     }

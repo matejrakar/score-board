@@ -15,12 +15,8 @@ public class MatchTest {
 
     @Test
     public void constructor_InvalidParameters_InitializationFail() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Match("", null);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Match(null, " ");
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Match("", null));
+        assertThrows(IllegalArgumentException.class, () -> new Match(null, " "));
     }
 
     @Test
@@ -37,5 +33,11 @@ public class MatchTest {
         match.updateScore(1, 0);
         assertEquals(match.getHomeTeamScore(), 1);
         assertEquals(match.getAwayTeamScore(), 0);
+    }
+
+    @Test
+    public void updateScore_InvalidScores_ExceptionThrown() {
+        Match match = new Match ("home_team_name", "away_team_name");
+        assertThrows(IllegalArgumentException.class, () -> match.updateScore(0, -1));
     }
 }
