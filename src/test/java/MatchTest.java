@@ -30,4 +30,12 @@ public class MatchTest {
         assertTrue(match1.equals(match2));
         assertTrue(match1.hashCode() == match2.hashCode());
     }
+
+    @Test
+    public void updateScore_ValidScores_CorrectScoresSet() {
+        Match match = new Match ("home_team_name", "away_team_name");
+        match.updateScore(1, 0);
+        assertEquals(match.getHomeTeamScore(), 1);
+        assertEquals(match.getAwayTeamScore(), 0);
+    }
 }

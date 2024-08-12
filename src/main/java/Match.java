@@ -17,6 +17,11 @@ public class Match {
         this.awayTeamScore = 0;
     }
 
+    public void updateScore (int homeTeamScore, int awayTeamScore) {
+        this.setHomeTeamScore(homeTeamScore);
+        this.setAwayTeamScore(awayTeamScore);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
