@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Match {
     private String homeTeamName;
     private String awayTeamName;
@@ -9,6 +11,26 @@ public class Match {
         this.awayTeamName = awayTeamName;
         this.homeTeamScore = 0;
         this.awayTeamScore = 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Match match = (Match) obj;
+        if (this.homeTeamName == match.getHomeTeamName() && this.awayTeamName == match.getAwayTeamName()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(homeTeamName, awayTeamName);
     }
 
     public String getHomeTeamName() {
