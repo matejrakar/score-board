@@ -1,9 +1,9 @@
 package com.scoreboard;
 
 import org.junit.jupiter.api.Test;
+import java.util.LinkedHashMap;
 
-import static com.scoreboard.TestConstants.TEST_AWAY_TEAM_NAME;
-import static com.scoreboard.TestConstants.TEST_HOME_TEAM_NAME;
+import static com.scoreboard.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ScoreBoardTest {
@@ -46,6 +46,25 @@ public class ScoreBoardTest {
         scoreBoard.addMatch(match);
         scoreBoard.removeMatch(match.hashCode());
         assertTrue(scoreBoard.getScoreBoard().isEmpty());
+    }
+
+    @Test
+    public void getSummaryOfMatches_MultipleMatches_ReturnsOrderedList() {
+        ScoreBoard unorderedScoreBoard = new ScoreBoard();
+        Match match1 = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        Match match2 = new Match(TEST_HOME_TEAM_NAME_2, TEST_AWAY_TEAM_NAME_2);
+        Match match3 = new Match(TEST_HOME_TEAM_NAME_3, TEST_AWAY_TEAM_NAME_3);
+        match1.updateScore(1,2);
+        match2.updateScore(3,3);
+        match3.updateScore(2,1);
+        unorderedScoreBoard.addMatch(match1);
+        unorderedScoreBoard.addMatch(match2);
+        unorderedScoreBoard.addMatch(match3);
+        LinkedHashMap<Integer, Match> expectedOrderedSummary = new LinkedHashMap<>();
+        expectedOrderedSummary.put(match2.hashCode(), match2);
+        expectedOrderedSummary.put(match1.hashCode(), match1);
+        expectedOrderedSummary.put(match3.hashCode(), match3);
+        assertIterableEquals(unorderedScoreBoard.getSummaryOfMatches().entrySet(), expectedOrderedSummary.entrySet(), "The LinkedHashMaps must be equal");
     }
 
 }
