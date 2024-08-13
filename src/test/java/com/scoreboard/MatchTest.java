@@ -1,6 +1,10 @@
 package com.scoreboard;
 
 import org.junit.jupiter.api.Test;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import static com.scoreboard.TestConstants.TEST_AWAY_TEAM_NAME;
 import static com.scoreboard.TestConstants.TEST_HOME_TEAM_NAME;
 
@@ -15,6 +19,8 @@ public class MatchTest {
         assertEquals(match.getAwayTeamName(), TEST_AWAY_TEAM_NAME);
         assertEquals(match.getHomeTeamScore(), 0);
         assertEquals(match.getAwayTeamScore(), 0);
+        assertNotNull(match.getStartTime());
+        assertTrue(ChronoUnit.SECONDS.between(Instant.now(), match.getStartTime()) <= 1);
     }
 
     @Test

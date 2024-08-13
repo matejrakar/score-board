@@ -1,5 +1,6 @@
 package com.scoreboard;
 
+import java.time.Instant;
 import java.util.Objects;
 
 public class Match {
@@ -7,6 +8,7 @@ public class Match {
     private String awayTeamName;
     private int homeTeamScore;
     private int awayTeamScore;
+    private final Instant startTime;
 
     public Match(String homeTeamName, String awayTeamName) {
         if (homeTeamName == null || awayTeamName == null
@@ -17,6 +19,7 @@ public class Match {
         this.awayTeamName = awayTeamName;
         this.homeTeamScore = 0;
         this.awayTeamScore = 0;
+        this.startTime = Instant.now();
     }
 
     public void updateScore (int homeTeamScore, int awayTeamScore) {
@@ -77,5 +80,9 @@ public class Match {
 
     public void setAwayTeamScore(int awayTeamScore) {
         this.awayTeamScore = awayTeamScore;
+    }
+
+    public Instant getStartTime() {
+        return startTime;
     }
 }
