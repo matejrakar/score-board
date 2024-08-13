@@ -39,4 +39,13 @@ public class ScoreBoardTest {
         assertNull(matchFromScoreBoard);
     }
 
+    @Test
+    public void finishMatch_MatchExists_RemovedFromList() {
+        ScoreBoard scoreBoard = new ScoreBoard();
+        Match match = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        scoreBoard.addMatch(match);
+        scoreBoard.removeMatch(match.hashCode());
+        assertTrue(scoreBoard.getScoreBoard().isEmpty());
+    }
+
 }

@@ -22,6 +22,10 @@ public class ScoreBoard {
         return this.scoreBoard.get(key);
     }
 
+    public void removeMatch(int key) {
+        this.scoreBoard.remove(key);
+    }
+
     public ConcurrentHashMap<Integer, Match> getScoreBoard() {
         return scoreBoard;
     }
