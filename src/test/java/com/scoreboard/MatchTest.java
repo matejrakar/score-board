@@ -43,8 +43,9 @@ public class MatchTest extends BaseTest {
     public void updateScore_ValidScores_CorrectScoresSet() {
         Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
 
-        match.updateScore(1, 0);
+        boolean result = match.updateScore(1, 0);
 
+        assertTrue(result);
         assertEquals(match.getHomeTeamScore(), 1);
         assertEquals(match.getAwayTeamScore(), 0);
     }
@@ -54,5 +55,14 @@ public class MatchTest extends BaseTest {
         Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
 
         assertThrows(IllegalArgumentException.class, () -> match.updateScore(-2, -1));
+    }
+
+    @Test
+    public void updateScore_ValidScoresAlreadyExist_NoUpdateReturnsFalse() {
+        Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+
+        boolean result = match.updateScore(0, 0);
+
+        assertFalse(result);
     }
 }

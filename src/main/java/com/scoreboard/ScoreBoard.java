@@ -22,15 +22,15 @@ public class ScoreBoard {
     /**
      * Adds a Match to scoreBoard
      * @param match
+     * @return True if match was successfully added and False if it wasn't
      * @throws IllegalArgumentException if Match object is null
      */
-    public void addMatch (Match match) {
-        if (match != null) {
-            this.scoreBoard.put(match.hashCode(), match);
-        }
-        else {
+    public boolean addMatch(Match match) {
+        if (match == null) {
             throw new IllegalArgumentException("Scoreboard cannot add a null value");
         }
+
+        return this.scoreBoard.putIfAbsent(match.hashCode(), match) == null;
     }
 
     /**
@@ -45,9 +45,10 @@ public class ScoreBoard {
     /**
      * Removes a Match object with specific key from scoreBoard
      * @param key
+     * @return True if Match was successfully removed and False if it wasn't
      */
-    public void removeMatch(int key) {
-        this.scoreBoard.remove(key);
+    public boolean removeMatch(int key) {
+        return this.scoreBoard.remove(key) != null;
     }
 
     /**

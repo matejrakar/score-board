@@ -39,12 +39,17 @@ public class Match {
      * @param awayTeamScore
      * @throws IllegalArgumentException if scores are negative integers
      */
-    public void updateScore (int homeTeamScore, int awayTeamScore) {
+    public boolean updateScore (int homeTeamScore, int awayTeamScore) {
+        boolean isUpdated = false;
         if (homeTeamScore < 0 || awayTeamScore < 0) {
             throw new IllegalArgumentException("Scores must be non-negative integers");
         }
-        this.setHomeTeamScore(homeTeamScore);
-        this.setAwayTeamScore(awayTeamScore);
+        if (this.homeTeamScore != homeTeamScore || this.awayTeamScore != awayTeamScore) {
+            this.setHomeTeamScore(homeTeamScore);
+            this.setAwayTeamScore(awayTeamScore);
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 
     /**

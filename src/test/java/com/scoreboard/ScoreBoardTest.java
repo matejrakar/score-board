@@ -16,10 +16,22 @@ public class ScoreBoardTest extends BaseTest {
         ScoreBoard scoreBoard = new ScoreBoard();
         Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
 
-        scoreBoard.addMatch(match);
+        boolean result = scoreBoard.addMatch(match);
 
+        assertTrue(result);
         assertTrue(scoreBoard.getScoreBoard().containsKey(match.hashCode()));
         assertEquals(scoreBoard.getScoreBoard().get(match.hashCode()), match);
+    }
+
+    @Test
+    public void addMatch_NotUniqueParam_ReturnsFalse() {
+        ScoreBoard scoreBoard = new ScoreBoard();
+        Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        scoreBoard.addMatch(match);
+
+        boolean result = scoreBoard.addMatch(match);
+
+        assertFalse(result);
     }
 
     @Test
@@ -55,9 +67,19 @@ public class ScoreBoardTest extends BaseTest {
         Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
         scoreBoard.addMatch(match);
 
-        scoreBoard.removeMatch(match.hashCode());
+        boolean result = scoreBoard.removeMatch(match.hashCode());
 
+        assertTrue(result);
         assertTrue(scoreBoard.getScoreBoard().isEmpty());
+    }
+
+    @Test
+    public void finishMatch_MatchDoesNotExist_ReturnsFalse() {
+        ScoreBoard scoreBoard = new ScoreBoard();
+
+        boolean result = scoreBoard.removeMatch(123456789);
+
+        assertFalse(result);
     }
 
     @Test
