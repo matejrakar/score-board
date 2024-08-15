@@ -14,7 +14,7 @@ public class ScoreBoardTest {
     @Test
     public void addMatch_ValidParam_NoError() {
         ScoreBoard scoreBoard = new ScoreBoard();
-        Match match = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
 
         scoreBoard.addMatch(match);
 
@@ -32,7 +32,7 @@ public class ScoreBoardTest {
     @Test
     public void getMatch_MatchExists_ReturnsMatch() {
         ScoreBoard scoreBoard = new ScoreBoard();
-        Match match = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
         scoreBoard.addMatch(match);
 
         Match matchFromScoreBoard = scoreBoard.getMatch(match.hashCode());
@@ -52,7 +52,7 @@ public class ScoreBoardTest {
     @Test
     public void finishMatch_MatchExists_RemovedFromList() {
         ScoreBoard scoreBoard = new ScoreBoard();
-        Match match = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        Match match = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
         scoreBoard.addMatch(match);
 
         scoreBoard.removeMatch(match.hashCode());
@@ -63,12 +63,9 @@ public class ScoreBoardTest {
     @Test
     public void getSummaryOfMatches_MultipleMatches_ReturnsOrderedMap() {
         ScoreBoard unorderedScoreBoard = new ScoreBoard();
-        Match match1 = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
-        Match match2 = new Match(TEST_HOME_TEAM_NAME_2, TEST_AWAY_TEAM_NAME_2);
-        Match match3 = new Match(TEST_HOME_TEAM_NAME_3, TEST_AWAY_TEAM_NAME_3);
-        match1.updateScore(1,2);
-        match2.updateScore(3,3);
-        match3.updateScore(2,1);
+        Match match1 = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME, 1,2);
+        Match match2 = createTestMatch(TEST_HOME_TEAM_NAME_2, TEST_AWAY_TEAM_NAME_2, 3,3);
+        Match match3 = createTestMatch(TEST_HOME_TEAM_NAME_3, TEST_AWAY_TEAM_NAME_3, 2,1);
         unorderedScoreBoard.addMatch(match1);
         unorderedScoreBoard.addMatch(match2);
         unorderedScoreBoard.addMatch(match3);
@@ -85,7 +82,7 @@ public class ScoreBoardTest {
     @Test
     public void getSummaryOfMatches_SingleMatch_ReturnsMapSingleEntry() {
         ScoreBoard unorderedScoreBoard = new ScoreBoard();
-        Match match1 = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        Match match1 = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
         unorderedScoreBoard.addMatch(match1);
         LinkedHashMap<Integer, Match> expectedOrderedSummary = new LinkedHashMap<>();
         expectedOrderedSummary.put(match1.hashCode(), match1);
@@ -98,9 +95,9 @@ public class ScoreBoardTest {
     @Test
     public void getSummaryOfMatches_MultipleMatchesTiedTotalScore_ReturnsMapInitialOrder() {
         ScoreBoard unorderedScoreBoard = new ScoreBoard();
-        Match match1 = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
-        Match match2 = new Match(TEST_HOME_TEAM_NAME_2, TEST_AWAY_TEAM_NAME_2);
-        Match match3 = new Match(TEST_HOME_TEAM_NAME_3, TEST_AWAY_TEAM_NAME_3);
+        Match match1 = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
+        Match match2 = createTestMatch(TEST_HOME_TEAM_NAME_2, TEST_AWAY_TEAM_NAME_2);
+        Match match3 = createTestMatch(TEST_HOME_TEAM_NAME_3, TEST_AWAY_TEAM_NAME_3);
         unorderedScoreBoard.addMatch(match1);
         unorderedScoreBoard.addMatch(match2);
         unorderedScoreBoard.addMatch(match3);
@@ -116,19 +113,16 @@ public class ScoreBoardTest {
 
     @Test
     public void getSummaryOfMatches_MultipleMatchesSameTotalScoreAndTime_ReturnsMapInitialOrder() throws NoSuchFieldException, IllegalAccessException {
-        ScoreBoard unorderedScoreBoard = new ScoreBoard();
-        Match match1 = new Match(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME);
-        Match match2 = new Match(TEST_HOME_TEAM_NAME_2, TEST_AWAY_TEAM_NAME_2);
-        Match match3 = new Match(TEST_HOME_TEAM_NAME_3, TEST_AWAY_TEAM_NAME_3);
-        match1.updateScore(1,2);
-        match2.updateScore(3,0);
-        match3.updateScore(2,1);
+        Match match1 = createTestMatch(TEST_HOME_TEAM_NAME, TEST_AWAY_TEAM_NAME, 1,2);
+        Match match2 = createTestMatch(TEST_HOME_TEAM_NAME_2, TEST_AWAY_TEAM_NAME_2, 3,0);
+        Match match3 = createTestMatch(TEST_HOME_TEAM_NAME_3, TEST_AWAY_TEAM_NAME_3, 2,1);
         Field startTimeField = Match.class.getDeclaredField("startTime");
         startTimeField.setAccessible(true);
         Instant testTime = Instant.now();
         startTimeField.set(match1, testTime);
         startTimeField.set(match1, testTime);
         startTimeField.set(match1, testTime);
+        ScoreBoard unorderedScoreBoard = new ScoreBoard();
         unorderedScoreBoard.addMatch(match1);
         unorderedScoreBoard.addMatch(match2);
         unorderedScoreBoard.addMatch(match3);
@@ -149,6 +143,18 @@ public class ScoreBoardTest {
         LinkedHashMap<Integer, Match>  actualOrderedSummary = unorderedScoreBoard.getSummaryOfMatches();
 
         assertTrue(actualOrderedSummary.entrySet().isEmpty());
+    }
+
+    public Match createTestMatch(String homeTeamName, String awayTeamName) {
+        Match match = new Match(homeTeamName, awayTeamName);
+        return match;
+    }
+
+    public Match createTestMatch(String homeTeamName, String awayTeamName, int homeTeamScore, int awayTeamScore) {
+        Match match = new Match(homeTeamName, awayTeamName);
+        match.setHomeTeamScore(homeTeamScore);
+        match.setAwayTeamScore(awayTeamScore);
+        return match;
     }
 
 }
