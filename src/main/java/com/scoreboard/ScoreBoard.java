@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
  */
 public class ScoreBoard {
     private ConcurrentHashMap<Integer, Match> scoreBoard;
+    private static final Logger logger = Logger.getLogger(Match.class.getName());
 
     /**
      * Constructs a new empty scoreBoard of type ConcurrentHashMap
@@ -27,9 +29,10 @@ public class ScoreBoard {
      */
     public boolean addMatch(Match match) {
         if (match == null) {
+            logger.warning("Match argument in addMatch method is null");
             throw new IllegalArgumentException("Scoreboard cannot add a null value");
         }
-
+        logger.info("Successfully added a match to score board");
         return this.scoreBoard.putIfAbsent(match.hashCode(), match) == null;
     }
 
@@ -48,7 +51,12 @@ public class ScoreBoard {
      * @return True if Match was successfully removed and False if it wasn't
      */
     public boolean removeMatch(int key) {
-        return this.scoreBoard.remove(key) != null;
+        if(this.scoreBoard.remove(key) != null) {
+            logger.info("Match successfully removed from scoreboard");
+            return true;
+        }
+        logger.info("Match to be removed does not exist");
+        return false;
     }
 
     /**

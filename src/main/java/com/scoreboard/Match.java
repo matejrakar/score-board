@@ -2,6 +2,7 @@ package com.scoreboard;
 
 import java.time.Instant;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Holds fields with information about a match and proprietary methods
@@ -13,6 +14,9 @@ public class Match {
     private int awayTeamScore;
     private final Instant startTime;
 
+    private static final Logger logger = Logger.getLogger(Match.class.getName());
+
+
     /**
      * Constructs a new match with given team names, with default team scores of 0 and Instant timestamp
      *
@@ -23,6 +27,7 @@ public class Match {
     public Match(String homeTeamName, String awayTeamName) {
         if (homeTeamName == null || awayTeamName == null
                 || homeTeamName.isBlank() || awayTeamName.isBlank()) {
+            logger.warning(Match.class.getName() + " constructor not initialized.");
             throw new IllegalArgumentException("Team names cannot be null or empty");
         }
         this.homeTeamName = homeTeamName;
@@ -42,6 +47,7 @@ public class Match {
     public boolean updateScore (int homeTeamScore, int awayTeamScore) {
         boolean isUpdated = false;
         if (homeTeamScore < 0 || awayTeamScore < 0) {
+            logger.warning("Negative integers in updateScore method.");
             throw new IllegalArgumentException("Scores must be non-negative integers");
         }
         if (this.homeTeamScore != homeTeamScore || this.awayTeamScore != awayTeamScore) {
@@ -49,6 +55,7 @@ public class Match {
             this.setAwayTeamScore(awayTeamScore);
             isUpdated = true;
         }
+        logger.info("Scores updated successfully");
         return isUpdated;
     }
 
