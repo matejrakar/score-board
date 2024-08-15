@@ -9,7 +9,7 @@ import java.util.LinkedHashMap;
 import static com.scoreboard.TestConstants.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ScoreBoardTest {
+public class ScoreBoardTest extends BaseTest {
 
     @Test
     public void addMatch_ValidParam_NoError() {
@@ -143,18 +143,6 @@ public class ScoreBoardTest {
         LinkedHashMap<Integer, Match>  actualOrderedSummary = unorderedScoreBoard.getSummaryOfMatches();
 
         assertTrue(actualOrderedSummary.entrySet().isEmpty());
-    }
-
-    public Match createTestMatch(String homeTeamName, String awayTeamName) {
-        Match match = new Match(homeTeamName, awayTeamName);
-        return match;
-    }
-
-    public Match createTestMatch(String homeTeamName, String awayTeamName, int homeTeamScore, int awayTeamScore) {
-        Match match = new Match(homeTeamName, awayTeamName);
-        match.setHomeTeamScore(homeTeamScore);
-        match.setAwayTeamScore(awayTeamScore);
-        return match;
     }
 
 }
