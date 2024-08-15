@@ -51,14 +51,14 @@ public class ScoreBoard {
     }
 
     /**
-     * Get summary of matches based on each match's total combined score, descending. If total score is the same between two Match objects, orders by startTime ascending.
+     * Get summary of matches based on each match's total combined score, descending. If total score is the same between two Match objects, orders by startTime descending.
      *
      * @return LinkedHashMap holding a summary of matches
      */
     public LinkedHashMap<Integer, Match> getSummaryOfMatches() {
         Comparator<Match> combinedScoreComparator = Comparator
                 .comparingInt((Match m) -> m.getHomeTeamScore() + m.getAwayTeamScore()).reversed();
-        Comparator<Match> secondaryComparator = Comparator.comparing(Match::getStartTime);
+        Comparator<Match> secondaryComparator = Comparator.comparing(Match::getStartTime).reversed();
         Comparator<Match> combinedComparator = combinedScoreComparator.thenComparing(secondaryComparator);
 
         LinkedHashMap<Integer, Match> orderedSummaryOfMatches = this.scoreBoard.entrySet()
