@@ -3,6 +3,9 @@ package com.scoreboard;
 import java.time.Instant;
 import java.util.Objects;
 
+/**
+ * Holds fields with information about a match and proprietary methods
+ */
 public class Match {
     private String homeTeamName;
     private String awayTeamName;
@@ -10,6 +13,13 @@ public class Match {
     private int awayTeamScore;
     private final Instant startTime;
 
+    /**
+     * Constructs a new match with given team names, with default team scores of 0 and Instant timestamp
+     *
+     * @param homeTeamName
+     * @param awayTeamName
+     * @throws IllegalArgumentException if team names are null or blank
+     */
     public Match(String homeTeamName, String awayTeamName) {
         if (homeTeamName == null || awayTeamName == null
                 || homeTeamName.isBlank() || awayTeamName.isBlank()) {
@@ -22,6 +32,13 @@ public class Match {
         this.startTime = Instant.now();
     }
 
+    /**
+     * Updates the score of a match
+     *
+     * @param homeTeamScore
+     * @param awayTeamScore
+     * @throws IllegalArgumentException if scores are negative integers
+     */
     public void updateScore (int homeTeamScore, int awayTeamScore) {
         if (homeTeamScore < 0 || awayTeamScore < 0) {
             throw new IllegalArgumentException("Scores must be non-negative integers");
@@ -30,6 +47,12 @@ public class Match {
         this.setAwayTeamScore(awayTeamScore);
     }
 
+    /**
+     * Compares two Match objects, which are considered equal if homeTeamName and awayTeamName fields are equal
+     *
+     * @param obj
+     * @return true if objects are the same and false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -45,6 +68,11 @@ public class Match {
         return false;
     }
 
+    /**
+     * HashCode is a hash of homeTeamName and awayTeamName, which makes a match unique
+     *
+     * @return hashCode
+     */
     @Override
     public int hashCode() {
         return Objects.hash(homeTeamName, awayTeamName);
